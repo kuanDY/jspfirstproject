@@ -40,13 +40,18 @@ public class LoginServlet extends HttpServlet {
                     HttpSession session = req.getSession();
                     session.setAttribute("username", username);
                     //로그 인 성공 시, 로그인 실패 횟수 0으로 초기화
+                    resetFailedLoginAttempts(username);
+
+
 
                     // 메인 페이지로 이동
                     resp.sendRedirect("index.jsp");
                 }else{
                     //로그 인 실패
                     //로그 인 실패 시, 로그인 실패 횟수 1증가
+                    recordFailedLoginAttempt(username);
                     //로그 인 폼으로 다시 이동, 에러 값 전달
+                    resp.sendRedirect("/login.jsp");
                 }
             }
         } catch (SQLException e){
@@ -54,6 +59,36 @@ public class LoginServlet extends HttpServlet {
         }
     }
 
+    /**
+     * 로그인 실패 횟수  0으로 초기화
+     * @param username
+     */
+
+    private void resetFailedLoginAttempts(String username) {
+        String sql = "Update users Set failCount = 0 WHERE username = ?";
+        Connection conn = (Connection) getServletContext().getAttribute("conn");
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1,username);
+            pstmt.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 로그인 실패 횟수 1회 증가
+     */
+    private void recordFailedLoginAttempt(String username) {
+        String sql = "Update users Set failCount = 0 WHERE username = ?";
+        Connection conn = (Connection) getServletContext().getAttribute("conn");
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1,username);
+            pstmt.executeUpdate();
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 패스워드 암호화 처리

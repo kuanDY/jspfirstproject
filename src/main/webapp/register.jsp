@@ -14,7 +14,7 @@
         <h1>회원가입</h1>
         <form action="register" method="post">
             <label for="username">아이디</label>
-            <input type="text" id="username" placeholder="아이디를 입력하세요." required> <br>
+            <input type="text" id="username" name="username" placeholder="아이디를 입력하세요." required> <br>
             <label for="password">비밀번호</label>
             <input type="text" id="password" name="password" required> <br>
             <button type="submit" class="btn btn-primary">회원가입</button>

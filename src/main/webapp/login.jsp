@@ -19,6 +19,13 @@
             <input type="text" id="password" name="password" required> <br>
             <button type="submit" class="btn btn-primary">로그인</button>
         </form>
+        <%
+            if("1".equals(request.getParameter("error"))){
+         %>
+        <p style="color:red">로그인에 실패했습니다.아이디와 비밀번호를 다시 입력하세요.</p>
+        <%
+            }
+        %>
     </div>
 </body>
 </html>
